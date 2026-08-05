@@ -1,4 +1,15 @@
-#!/bin/bash
-chmod +x ./xray
-sed -i "s/8080/$PORT/g" config.json
-./xray run -c config.json
+import os
+import json
+import subprocess
+
+port = int(os.environ.get("PORT", 8080))
+
+with open("config.json", "r") as f:
+    config = json.load(f)
+
+config["inbounds"][0]["port"] = port
+
+with open("config.json", "w") as f:
+    json.dump(config, f)
+
+subprocess.run(["./xray", "run", "-config", "config.json"])
