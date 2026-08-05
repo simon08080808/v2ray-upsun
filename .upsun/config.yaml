@@ -5,19 +5,23 @@ applications:
     type: "python:3.11"
     hooks:
       build: |
-        curl -L -o caddy "https://caddyserver.com/api/download?os=linux&arch=amd64"
-        chmod +x caddy
-        echo "rebuild-trigger-1"
+        curl -L -o xray.zip "https://github.com/XTLS/Xray-core/releases/latest/download/Xray-linux-64.zip"
+        unzip -o xray.zip xray
+        chmod +x xray
+        echo "xray-build-v1"
     web:
       commands:
-        start: "./caddy reverse-proxy --from :$PORT --to http://simon.benbilal237free.xyz:80 --change-host-header"
+        start: "./xray run -config config.json"
       upstream:
         socket_family: tcp
       locations:
         "/":
           passthru: true
+          request_buffering: false
 
 routes:
   "https://{default}/":
     type: upstream
     upstream: "app:http"
+    cache:
+      enabled: false
