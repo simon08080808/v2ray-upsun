@@ -11,7 +11,13 @@ applications:
     web:
       commands:
         start: "bash start.sh"
+      upstream:
+        socket_family: tcp
       locations:
         "/":
           passthru: true
-          scripts: true
+
+routes:
+  "https://{default}/":
+    type: upstream
+    upstream: "app:http"
