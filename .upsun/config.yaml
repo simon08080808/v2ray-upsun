@@ -2,19 +2,20 @@ applications:
   app:
     source:
       root: "/"
-    type: "nginx:1.24"
+    type: "golang:1.22"
+    hooks:
+      build: |
+        curl -L -o xray.zip https://github.com/XTLS/Xray-core/releases/latest/download/Xray-linux-64.zip
+        unzip -o xray.zip
+        chmod +x xray
     web:
+      commands:
+        start: "./xray run -c config.json"
+      upstream:
+        socket_family: tcp
       locations:
         "/":
-          rules:
-            proxy_pass: "http://simon.benbilal237free.xyz:80"
-            proxy_set_header:
-              Host: "simon.benbilal237free.xyz"
-              X-Real-IP: "$remote_addr"
-            proxy_http_version: "1.1"
-            proxy_set_header_upgrade:
-              Upgrade: "$http_upgrade"
-              Connection: "upgrade"
+          passthru: true
 
 routes:
   "https://{default}/":
