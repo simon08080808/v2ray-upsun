@@ -17,8 +17,8 @@
         "decryption": "none"
       },
       "streamSettings": {
-        "network": "ws",
-        "wsSettings": {
+        "network": "splithttp",
+        "splithttpSettings": {
           "path": "/"
         }
       }
