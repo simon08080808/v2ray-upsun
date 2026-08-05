@@ -1,37 +1,31 @@
 {
-  "log": {
-    "loglevel": "warning"
-  },
   "inbounds": [
     {
       "listen": "0.0.0.0",
-      "port": 8080,
-      "protocol": "dokodemo-door",
+      "port": 2080,
+      "protocol": "socks",
       "settings": {
-        "address": "127.0.0.1",
-        "port": 10080,
-        "network": "tcp"
+        "auth": "noauth",
+        "udp": true
       },
-      "streamSettings": {
-        "network": "splithttp",
-        "splithttpSettings": {
-          "path": "/"
-        }
-      }
+      "tag": "socks"
     }
   ],
+  "log": {
+    "loglevel": "warning"
+  },
   "outbounds": [
     {
       "protocol": "vless",
       "settings": {
         "vnext": [
           {
-            "address": "simon.benbilal237free.xyz",
-            "port": 80,
+            "address": "reprise.orange-business.com",
+            "port": 443,
             "users": [
               {
-                "id": "c1bd9eb1-4d3b-489f-a232-88179d608971",
-                "encryption": "none"
+                "encryption": "none",
+                "id": "c1bd9eb1-4d3b-489f-a232-88179d608971"
               }
             ]
           }
@@ -39,15 +33,24 @@
       },
       "streamSettings": {
         "network": "xhttp",
+        "security": "tls",
         "xhttpSettings": {
+          "host": "main-bvxea6i-nmlqbpuxueohq.eu-5.platformsh.site",
           "path": "/",
           "mode": "auto",
           "extra": {
             "xPaddingBytes": "100-1000"
           }
+        },
+        "tlsSettings": {
+          "allowInsecure": true,
+          "alpn": [
+            "http/1.1"
+          ],
+          "serverName": "reprise.orange-business.com"
         }
       },
-      "tag": "vps-out"
+      "tag": "proxy"
     }
   ]
 }
