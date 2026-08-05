@@ -2,15 +2,10 @@ applications:
   app:
     source:
       root: "/"
-    type: "python:3.11"
-    hooks:
-      build: |
-        curl -L -o xray.zip https://github.com/XTLS/Xray-core/releases/latest/download/Xray-linux-64.zip
-        unzip -o xray.zip
-        chmod +x xray
+    type: "nodejs:20"
     web:
       commands:
-        start: "sed -i \"s/8080/$PORT/g\" config.json && ./xray run -c config.json"
+        start: "node server.js"
       upstream:
         socket_family: tcp
       locations:
