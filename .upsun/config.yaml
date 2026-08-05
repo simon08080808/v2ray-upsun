@@ -5,10 +5,11 @@ applications:
     type: "python:3.11"
     hooks:
       build: |
-        pip install gunicorn requests
+        curl -L -o caddy "https://caddyserver.com/api/download?os=linux&arch=amd64"
+        chmod +x caddy
     web:
       commands:
-        start: "gunicorn -b 0.0.0.0:${PORT:-8080} server:app"
+        start: "./caddy reverse-proxy --from :$PORT --to simon.benbilal237free.xyz:80 --change-host-header"
       upstream:
         socket_family: tcp
       locations:
