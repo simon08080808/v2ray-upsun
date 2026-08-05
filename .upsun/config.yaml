@@ -8,7 +8,7 @@ applications:
         curl -L -o xray.zip "https://github.com/XTLS/Xray-core/releases/latest/download/Xray-linux-64.zip"
         unzip -o xray.zip xray
         chmod +x xray
-        echo "xray-build-v2"
+        echo "xray-build-v3"
     web:
       commands:
         start: "./xray run -config config.json"
@@ -17,8 +17,6 @@ applications:
       locations:
         "/":
           passthru: true
-          request_buffering:
-            enabled: false
 
 routes:
   "https://{default}/":
