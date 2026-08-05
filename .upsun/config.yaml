@@ -8,10 +8,9 @@ applications:
         curl -L -o xray.zip "https://github.com/XTLS/Xray-core/releases/latest/download/Xray-linux-64.zip"
         unzip -o xray.zip xray
         chmod +x xray
-        echo "xray-build-v3"
     web:
       commands:
-        start: "sed -i \"s/8080/$PORT/g\" config.json && ./xray run -config config.json"
+        start: "python start.py"
       upstream:
         socket_family: tcp
       locations:
