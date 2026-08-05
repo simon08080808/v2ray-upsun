@@ -10,14 +10,7 @@
       "settings": {
         "address": "simon.benbilal237free.xyz",
         "port": 80,
-        "network": "tcp"
-      },
-      "streamSettings": {
-        "network": "splithttp",
-        "splithttpSettings": {
-          "path": "/",
-          "xPaddingBytes": "100-1000"
-        }
+        "network": "tcp,udp"
       }
     }
   ],
