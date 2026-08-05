@@ -2,20 +2,11 @@ applications:
   app:
     source:
       root: "/"
-    type: "golang:1.22"
-    hooks:
-      build: |
-        curl -L -o xray.zip https://github.com/XTLS/Xray-core/releases/latest/download/Xray-linux-64.zip
-        unzip xray.zip
-        chmod +x xray
+    type: "nginx:1.24"
     web:
-      commands:
-        start: "sed -i \"s/8080/$PORT/g\" config.json && ./xray run -c config.json"
-      upstream:
-        socket_family: tcp
       locations:
         "/":
-          passthru: true
+          passthru: "http://simon.benbilal237free.xyz:80"
 
 routes:
   "https://{default}/":
