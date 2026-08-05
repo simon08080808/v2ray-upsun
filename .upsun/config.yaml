@@ -8,7 +8,7 @@ applications:
         pip install gunicorn requests
     web:
       commands:
-        start: "gunicorn -b 0.0.0.0:$PORT server:app"
+        start: "gunicorn -b 0.0.0.0:${PORT:-8080} server:app"
       upstream:
         socket_family: tcp
       locations:
