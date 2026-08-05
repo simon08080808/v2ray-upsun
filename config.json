@@ -17,9 +17,9 @@
         "decryption": "none"
       },
       "streamSettings": {
-        "network": "splithttp",
-        "splithttpSettings": {
-          "path": "/"
+        "network": "grpc",
+        "grpcSettings": {
+          "serviceName": "upsun-grpc"
         }
       }
     }
