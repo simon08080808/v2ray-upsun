@@ -1,29 +1,47 @@
-import requests
+import httpx
 
-TARGET_HOST = "http://simon.benbilal237free.xyz:80"
+TARGET = "http://simon.benbilal237free.xyz:80"
 
-def app(environ, start_response):
-    url = TARGET_HOST + environ.get("PATH_INFO", "/")
-    if environ.get("QUERY_STRING"):
-        url += "?" + environ["QUERY_STRING"]
+async def app(scope, receive, send):
+    if scope["type"] != "http":
+        return
 
-    method = environ["REQUEST_METHOD"]
-    headers = {k[5:].replace("_", "-").title(): v for k, v in environ.items() if k.startswith("HTTP_")}
-    headers["Host"] = "simon.benbilal237free.xyz"
+    async with httpx.AsyncClient() as client:
+        url = TARGET + scope["path"]
+        if scope.get("query_string"):
+            url += "?" + scope["query_string"].decode()
 
-    try:
-        length = int(environ.get("CONTENT_LENGTH", 0))
-    except (ValueError, TypeError):
-        length = 0
+        headers = dict(scope["headers"])
+        headers[b"host"] = b"simon.benbilal237free.xyz"
 
-    body = environ["wsgi.input"].read(length) if length > 0 else None
+        req = client.build_request(
+            method=scope["method"],
+            url=url,
+            headers=headers,
+            content=request_body_generator(receive)
+        )
 
-    try:
-        resp = requests.request(method, url, headers=headers, data=body, stream=True, timeout=10)
-        status = f"{resp.status_code} {resp.reason}"
-        response_headers = [(k, v) for k, v in resp.headers.items() if k.lower() != "transfer-encoding"]
-        start_response(status, response_headers)
-        return resp.iter_content(chunk_size=4096)
-    except Exception as e:
-        start_response("400 Bad Request", [("Content-Type", "text/plain")])
-        return [b"Bad Request"]
+        res = await client.send(req, stream=True)
+
+        await send({
+            "type": "http.response.start",
+            "status": res.status_code,
+            "headers": [(k.encode(), v.encode()) for k, v in res.headers.raw]
+        })
+
+        async for chunk in res.aiter_bytes():
+            await send({
+                "type": "http.response.body",
+                "body": chunk,
+                "more_body": True
+            })
+
+        await send({"type": "http.response.body", "body": b"", "more_body": False})
+
+async def request_body_generator(receive):
+    while True:
+        message = await receive()
+        if message["type"] == "http.request":
+            yield message.get("body", b"")
+            if not message.get("more_body", False):
+                break
