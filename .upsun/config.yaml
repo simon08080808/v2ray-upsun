@@ -3,9 +3,12 @@ applications:
     source:
       root: "/"
     type: "python:3.11"
+    hooks:
+      build: |
+        pip install gunicorn requests
     web:
       commands:
-        start: "python3 server.py"
+        start: "gunicorn -b 0.0.0.0:$PORT server:app"
       upstream:
         socket_family: tcp
       locations:
