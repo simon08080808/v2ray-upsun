@@ -4,26 +4,29 @@
   },
   "inbounds": [
     {
+      "port": 10000,
       "listen": "0.0.0.0",
-      "port": 8080,
-      "protocol": "dokodemo-door",
+      "protocol": "vless",
       "settings": {
-        "address": "simon.benbilal237free.xyz",
-        "port": 80,
-        "network": "tcp"
+        "clients": [
+          {
+            "id": "e0b8a1c2-3d4e-5f6a-7b8c-9d0e1f2a3b4c",
+            "level": 0
+          }
+        ],
+        "decryption": "none"
       },
       "streamSettings": {
-        "network": "splithttp",
-        "splithttpSettings": {
-          "path": "/"
+        "network": "ws",
+        "wsSettings": {
+          "path": "/v2ray"
         }
       }
     }
   ],
   "outbounds": [
     {
-      "protocol": "freedom",
-      "tag": "direct"
+      "protocol": "freedom"
     }
   ]
 }
