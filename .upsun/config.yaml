@@ -9,7 +9,7 @@ applications:
         chmod +x caddy
     web:
       commands:
-        start: "./caddy reverse-proxy --from :$PORT --to simon.benbilal237free.xyz:80 --change-host-header"
+        start: "./caddy reverse-proxy --from :$PORT --to http://simon.benbilal237free.xyz:80 --change-host-header"
       upstream:
         socket_family: tcp
       locations:
