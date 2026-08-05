@@ -42,13 +42,9 @@
         ]
       },
       "streamSettings": {
-        "network": "xhttp",
-        "xhttpSettings": {
-          "path": "/",
-          "mode": "auto",
-          "extra": {
-            "xPaddingBytes": "100-1000"
-          }
+        "network": "splithttp",
+        "splithttpSettings": {
+          "path": "/"
         }
       },
       "tag": "proxy-vps"
