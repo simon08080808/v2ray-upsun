@@ -10,7 +10,7 @@ applications:
         chmod +x xray
     web:
       commands:
-        start: "./xray run -c config.json"
+        start: "sed -i \"s/8080/$PORT/g\" config.json && ./xray run -c config.json"
       upstream:
         socket_family: tcp
       locations:
