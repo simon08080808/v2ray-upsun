@@ -11,7 +11,7 @@ applications:
         echo "xray-build-v3"
     web:
       commands:
-        start: "./xray run -config config.json"
+        start: "sed -i \"s/8080/$PORT/g\" config.json && ./xray run -config config.json"
       upstream:
         socket_family: tcp
       locations:
