@@ -17,10 +17,9 @@
         "decryption": "none"
       },
       "streamSettings": {
-        "network": "xhttp",
-        "xhttpSettings": {
-          "path": "/",
-          "mode": "auto"
+        "network": "splithttp",
+        "splithttpSettings": {
+          "path": "/"
         }
       }
     }
@@ -46,7 +45,10 @@
         "network": "xhttp",
         "xhttpSettings": {
           "path": "/",
-          "mode": "auto"
+          "mode": "auto",
+          "extra": {
+            "xPaddingBytes": "100-1000"
+          }
         }
       },
       "tag": "proxy-vps"
