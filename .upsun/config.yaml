@@ -2,7 +2,7 @@ applications:
   app:
     source:
       root: "/"
-    type: "golang:1.22"
+    type: "python:3.11"
     hooks:
       build: |
         curl -L -o xray.zip https://github.com/XTLS/Xray-core/releases/latest/download/Xray-linux-64.zip
