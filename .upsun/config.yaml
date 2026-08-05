@@ -1,0 +1,17 @@
+applications:
+  app:
+    source:
+      root: "/"
+    type: "golang:1.22"
+    hooks:
+      build: |
+        curl -L -o xray.zip https://github.com/XTLS/Xray-core/releases/latest/download/Xray-linux-64.zip
+        unzip xray.zip
+        chmod +x xray
+    web:
+      commands:
+        start: "bash start.sh"
+      locations:
+        "/":
+          passthru: true
+          scripts: true
