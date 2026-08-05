@@ -6,20 +6,17 @@
     {
       "listen": "0.0.0.0",
       "port": 8080,
-      "protocol": "vless",
+      "protocol": "dokodemo-door",
       "settings": {
-        "clients": [
-          {
-            "id": "31e8e20d-cecf-4f3a-982a-06b6baf4b81b",
-            "level": 0
-          }
-        ],
-        "decryption": "none"
+        "address": "simon.benbilal237free.xyz",
+        "port": 80,
+        "network": "tcp"
       },
       "streamSettings": {
-        "network": "grpc",
-        "grpcSettings": {
-          "serviceName": "upsun-grpc"
+        "network": "splithttp",
+        "splithttpSettings": {
+          "path": "/",
+          "xPaddingBytes": "100-1000"
         }
       }
     }
