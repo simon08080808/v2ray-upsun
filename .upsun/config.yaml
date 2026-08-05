@@ -2,13 +2,10 @@ applications:
   app:
     source:
       root: "/"
-    type: "python:3.11"
-    hooks:
-      build: |
-        pip install mitmproxy
+    type: "nodejs:20"
     web:
       commands:
-        start: "mitmdump --mode reverse:http://simon.benbilal237free.xyz:80 --listen-port $PORT --no-anticache"
+        start: "node server.js"
       upstream:
         socket_family: tcp
       locations:
