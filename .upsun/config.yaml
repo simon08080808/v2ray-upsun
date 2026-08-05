@@ -3,14 +3,15 @@ applications:
     source:
       root: "/"
     type: "python:3.11"
+    dependencies:
+      python:
+        - pip
     hooks:
       build: |
-        curl -L -o xray.zip "https://github.com/XTLS/Xray-core/releases/latest/download/Xray-linux-64.zip"
-        unzip -o xray.zip xray
-        chmod +x xray
+        pip install -r requirements.txt
     web:
       commands:
-        start: "python start.py"
+        start: "python main.py"
       upstream:
         socket_family: tcp
       locations:
