@@ -5,7 +5,7 @@ applications:
     type: "python:3.11"
     dependencies:
       python:
-        - pip
+        pip: "*"
     hooks:
       build: |
         pip install -r requirements.txt
