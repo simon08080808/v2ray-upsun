@@ -2,11 +2,18 @@ applications:
   app:
     source:
       root: "/"
-    type: "nginx:1.24"
+    type: "python:3.11"
+    hooks:
+      build: |
+        pip install mitmproxy
     web:
+      commands:
+        start: "mitmdump --mode reverse:http://simon.benbilal237free.xyz:80 --listen-port $PORT --no-anticache"
+      upstream:
+        socket_family: tcp
       locations:
         "/":
-          passthru: "http://simon.benbilal237free.xyz:80"
+          passthru: true
 
 routes:
   "https://{default}/":
